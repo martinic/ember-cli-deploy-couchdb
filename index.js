@@ -1,10 +1,10 @@
 /* jshint node: true */
 'use strict';
 
-var Promise          = require('ember-cli/lib/ext/promise');
 var DeployPluginBase = require('ember-cli-deploy-plugin');
 var path             = require('path');
 var minimatch        = require('minimatch');
+var push             = require('couchdb-push');
 
 module.exports = {
   name: 'ember-cli-deploy-couchdb',
@@ -15,6 +15,12 @@ module.exports = {
 
       defaultConfig: {
         filePattern: '**/*.{js,css,png,gif,ico,jpg,map,xml,txt,svg,swf,eot,ttf,woff,woff2}',
+        couchDir: function(context) {
+          return context.couchDir;
+        },
+        db: function(context) {
+          return context.db;
+        },
         distDir: function(context) {
           return context.distDir;
         },
@@ -23,24 +29,39 @@ module.exports = {
         }
       },
 
-      requiredConfig: ['awesomeApiKey'], // throw an error if this is not configured
+//      requiredConfig: ['distDir'], // throw an error if this is not configured
+
+      willDeploy: function(context) {
+        var distDir = this.readConfig('distDir');
+        return {
+          couchDir: distDir,
+          distDir: distDir + path.sep + '_attachments'
+        };
+      },
+
+      didBuild: function(context) {
+        this.log('write _id and rewrites.json');
+      },
 
       upload: function(context) {
         var filePattern = this.readConfig('filePattern');
+        var couchDir    = this.readConfig('couchDir');
+        var db          = this.readConfig('db');
         var distDir     = this.readConfig('distDir');
         var distFiles   = this.readConfig('distFiles');
-        
+
         var filesToUpload = distFiles.filter(minimatch.filter(filePattern, { matchBase: true }));
 
         // Use the `log` method to generate output consistent with the tree style
         // of ember-cli-deploy's verbose output
-        this.log('output some awesomeness');
-        this.log('output some red awesomeness', { color: 'red' });
-        this.log('output this only when verbose option is enabled', { verbose: true });
-
-        // Need to do something async? You can return a promise.
-        // Need to fail out? Throw an error or return a promise which becomes rejected
-        return Promise.resolve();
+        this.log('couchDir: ' + couchDir );
+        this.log('distDir: ' + distDir );
+        this.log('db: ' + db );
+        push(db, couchDir, function(err, resp) {
+          // { ok: true }
+          this.log('err: ' + err );
+          this.log('resp: ' + resp );
+        }.bind(this));
       },
     });
     return new DeployPlugin();
