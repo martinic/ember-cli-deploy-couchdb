@@ -3,8 +3,8 @@
 
 var DeployPluginBase = require('ember-cli-deploy-plugin');
 var path             = require('path');
-var minimatch        = require('minimatch');
 var push             = require('couchdb-push');
+var fs               = require('fs');
 
 module.exports = {
   name: 'ember-cli-deploy-couchdb',
@@ -14,12 +14,17 @@ module.exports = {
       name: options.name,
 
       defaultConfig: {
-        filePattern: '**/*.{js,css,png,gif,ico,jpg,map,xml,txt,svg,swf,eot,ttf,woff,woff2}',
         couchDir: function(context) {
           return context.couchDir;
         },
         db: function(context) {
           return context.db;
+        },
+        ddocname: function(context) {
+          return context.ddocname || context.project.name();
+        },
+        couchappignore: function(context) {
+          return context.couchappignore || [];
         },
         distDir: function(context) {
           return context.distDir;
@@ -31,7 +36,7 @@ module.exports = {
 
 //      requiredConfig: ['distDir'], // throw an error if this is not configured
 
-      willDeploy: function(context) {
+      willDeploy: function(/* context */) {
         var distDir = this.readConfig('distDir');
         return {
           couchDir: distDir,
@@ -39,28 +44,69 @@ module.exports = {
         };
       },
 
-      didBuild: function(context) {
-        this.log('write _id and rewrites.json');
+      didBuild: function(/* context */) {
+        var couchDir       = this.readConfig('couchDir');
+        var db             = this.readConfig('db');
+        var ddocname       = this.readConfig('ddocname');
+        var distFiles      = this.readConfig('distFiles');
+        var couchappignore = this.readConfig('couchappignore');
+
+        this.log('couchDir   : ' + couchDir );
+        db = db.replace( /\/\/.*\@/g ,'//'); // Strip username, password
+        this.log("Visit      : " + db + "/_design/" + ddocname + "/_rewrite/ or vhost");
+        db = db.replace( /^.*\/\/.*\//g ,'/'); // Strip domain
+        this.log("ENV.baseURL: '" + db + "/_design/" + ddocname + "/_rewrite/' or '/'");
+
+        distFiles.sort();
+        var previous = "";
+        var rewrites = [];
+
+        distFiles.forEach(function (item) {
+          if (item === 'index.html') {
+            return;
+          }
+          item = item.replace( /\/.*$/g ,'/*');
+          if (item !== previous) {
+            rewrites.push(
+              {
+                "from": item,
+                "to": item,
+                "method": "GET"
+              }
+            );
+            previous = item;
+          }
+        }.bind(this));
+
+        rewrites.push(
+          {
+            "from": "*",
+            "to": "index.html",
+            "method": "GET"
+          },
+          {
+            "from": "",
+            "to": "index.html",
+            "method": "GET"
+          }
+        );
+
+        fs.writeFileSync(couchDir + path.sep + "_id", "_design/" + ddocname);
+        fs.writeFileSync(couchDir + path.sep + "rewrites.json", JSON.stringify(rewrites));
+        fs.writeFileSync(couchDir + path.sep + ".couchapprc", "{}");
+        fs.writeFileSync(couchDir + path.sep + ".couchappignore", JSON.stringify(couchappignore));
       },
 
-      upload: function(context) {
-        var filePattern = this.readConfig('filePattern');
+      upload: function(/* context */) {
         var couchDir    = this.readConfig('couchDir');
         var db          = this.readConfig('db');
-        var distDir     = this.readConfig('distDir');
-        var distFiles   = this.readConfig('distFiles');
 
-        var filesToUpload = distFiles.filter(minimatch.filter(filePattern, { matchBase: true }));
-
-        // Use the `log` method to generate output consistent with the tree style
-        // of ember-cli-deploy's verbose output
-        this.log('couchDir: ' + couchDir );
-        this.log('distDir: ' + distDir );
-        this.log('db: ' + db );
-        push(db, couchDir, function(err, resp) {
-          // { ok: true }
-          this.log('err: ' + err );
-          this.log('resp: ' + resp );
+        push(db, couchDir, function(err) {
+          if(err) {
+            this.log('Upload: ' + err );
+          } else {
+            this.log('Upload OK' );
+          }
         }.bind(this));
       },
     });
