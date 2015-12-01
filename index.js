@@ -5,6 +5,7 @@ var DeployPluginBase = require('ember-cli-deploy-plugin');
 var path             = require('path');
 var push             = require('couchdb-push');
 var fs               = require('fs');
+var Promise          = require('ember-cli/lib/ext/promise');
 
 module.exports = {
   name: 'ember-cli-deploy-couchdb',
@@ -101,13 +102,19 @@ module.exports = {
         var couchDir    = this.readConfig('couchDir');
         var db          = this.readConfig('db');
 
-        push(db, couchDir, function(err) {
-          if(err) {
-            this.log('Upload: ' + err );
-          } else {
-            this.log('Upload OK' );
-          }
+        this.log('Start Upload');
+        var promise = new Promise(function(resolve, reject) {
+          push(db, couchDir, function(error, response) {
+            if(error) {
+              this.log(error + ' ' + response);
+              reject(error);
+            } else {
+              this.log('OK');
+              resolve('OK');
+            }
+          }.bind(this));
         }.bind(this));
+        return promise;
       },
     });
     return new DeployPlugin();
