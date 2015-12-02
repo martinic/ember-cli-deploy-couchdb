@@ -35,8 +35,6 @@ module.exports = {
         }
       },
 
-//      requiredConfig: ['distDir'], // throw an error if this is not configured
-
       willDeploy: function(/* context */) {
         var distDir = this.readConfig('distDir');
         return {
@@ -52,11 +50,11 @@ module.exports = {
         var distFiles      = this.readConfig('distFiles');
         var couchappignore = this.readConfig('couchappignore');
 
-        this.log('couchDir   : ' + couchDir );
+        this.log('couchDir   : ' + couchDir, { color: 'gray' });
         db = db.replace( /\/\/.*\@/g ,'//'); // Strip username, password
-        this.log("Visit      : " + db + "/_design/" + ddocname + "/_rewrite/ or vhost");
+        this.log("Visit      : " + db + "/_design/" + ddocname + "/_rewrite/ or vhost", { color: 'gray' });
         db = db.replace( /^.*\/\/.*\//g ,'/'); // Strip domain
-        this.log("ENV.baseURL: '" + db + "/_design/" + ddocname + "/_rewrite/' or '/'");
+        this.log("ENV.baseURL: '" + db + "/_design/" + ddocname + "/_rewrite/' or '/'", { color: 'gray' });
 
         distFiles.sort();
         var previous = "";
@@ -102,14 +100,14 @@ module.exports = {
         var couchDir    = this.readConfig('couchDir');
         var db          = this.readConfig('db');
 
-        this.log('Start Upload');
+        this.log('Start Upload', { color: 'green' });
         var promise = new Promise(function(resolve, reject) {
           push(db, couchDir, function(error, response) {
             if(error) {
-              this.log(error + ' ' + response);
+              this.log(error + ' ' + response, { color: 'red' });
               reject(error);
             } else {
-              this.log('OK');
+              this.log('OK', { color: 'green' });
               resolve('OK');
             }
           }.bind(this));
