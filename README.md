@@ -30,6 +30,22 @@ ENV.couchdb = {
 }
 ```
 
+- Place the following configuration into `config/environment.js` where `ddocname` is normaly the same as `modulePrefix:`. `ddocname` can be changed in the configuration options.
+
+```javascript
+if (environment === 'production') {
+  ENV.baseURL = '/emberapp/_design/ddocname/_rewrite/';
+}
+```
+
+If a [vhost][3] is used do the following:
+
+```javascript
+if (environment === 'production') {
+  ENV.baseURL = '/';
+}
+```
+
 - Run the pipeline
 
 ```bash
@@ -94,3 +110,4 @@ The following properties are expected to be present on the deployment `context` 
 
 [1]: http://ember-cli.github.io/ember-cli-deploy/plugins "Plugin Documentation"
 [2]: https://github.com/ember-cli-deploy/ember-cli-deploy-build "ember-cli-deploy-build"
+[3]: https://wiki.apache.org/couchdb/Virtual_Hosts "vhost"
