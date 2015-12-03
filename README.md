@@ -14,7 +14,7 @@ For more information on what plugins are and how they work, please refer to the 
 
 To get up and running quickly, do the following:
 
-- Ensure [ember-cli-deploy-build][2] is installed and configured.
+- Ensure [ember-cli-deploy-build-plus][2] is installed and configured.
 
 - Install this plugin
 
@@ -94,7 +94,7 @@ Array of regexps for files to skip upload.
 
 ### distDir
 
-The root directory where the files will be searched for. By default, this option will use the `distDir` property of the deployment context, provided by [ember-cli-deploy-build][2].
+The root directory where the files will be searched for. By default, this option will use the `distDir` property of the deployment context, provided by [ember-cli-deploy-build-plus][2].
 
 *Default:* `context.distDir`
 
@@ -102,12 +102,12 @@ The root directory where the files will be searched for. By default, this option
 
 The following properties are expected to be present on the deployment `context` object:
 
-- `distDir`      (provided by [ember-cli-deploy-build][2])
+- `distDir`      (provided by [ember-cli-deploy-build-plus][2])
 
 ## Running Tests
 
 - `npm test`
 
 [1]: http://ember-cli.github.io/ember-cli-deploy/plugins "Plugin Documentation"
-[2]: https://github.com/ember-cli-deploy/ember-cli-deploy-build "ember-cli-deploy-build"
+[2]: https://github.com/martinic/ember-cli-deploy-build-plus "ember-cli-deploy-build-plus"
 [3]: https://wiki.apache.org/couchdb/Virtual_Hosts "vhost"
