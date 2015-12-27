@@ -2,6 +2,8 @@
 
 > An ember-cli-deploy plugin to upload files to CouchDB
 
+[![](https://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/plugins/ember-cli-deploy-couchdb.svg)](http://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/)
+
 This plugin uploads an Ember App to a CouchDB design doc. The Ember App is served directly to the browser from CouchDB, without any other software in the stack.
 
 ## What is an ember-cli-deploy plugin?
