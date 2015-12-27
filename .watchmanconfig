@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
   "ignore_dirs": ["tmp"]
+=======
+  "ignore_dirs": ["tmp", "dist"]
+>>>>>>> ember-cli-update/master
 }
