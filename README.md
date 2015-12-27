@@ -104,6 +104,12 @@ The following properties are expected to be present on the deployment `context` 
 
 - `distDir`      (provided by [ember-cli-deploy-build-plus][2])
 
+## Issues
+
+You can use the [issue tracker][4] to provide feedback, suggest features or report bugs.
+
+- If you get `Assertion failed: end <= source_len, file src\smalloc.cc, line 280` you are using node.js v0.12 or io.js v1.3.0. These  versions have a bug with Buffers. Upgrade to a newer or older version.
+
 ## Running Tests
 
 - `npm test`
@@ -111,3 +117,4 @@ The following properties are expected to be present on the deployment `context` 
 [1]: http://ember-cli.github.io/ember-cli-deploy/plugins "Plugin Documentation"
 [2]: https://github.com/martinic/ember-cli-deploy-build-plus "ember-cli-deploy-build-plus"
 [3]: https://wiki.apache.org/couchdb/Virtual_Hosts "vhost"
+[4]: https://github.com/martinic/ember-cli-deploy-couchdb/issues "issue tracker"
