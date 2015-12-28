@@ -43,7 +43,7 @@
     "ember-cli-deploy-plugin"
   ],
   "dependencies": {
-    "couchdb-push": "^2.2.2",
+    "couchdb-push": "^2.3.0",
     "ember-cli-babel": "^5.1.5",
     "ember-cli-deploy-plugin": "^0.2.0"
   },
