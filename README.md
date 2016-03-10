@@ -16,7 +16,7 @@ For more information on what plugins are and how they work, please refer to the 
 
 To get up and running quickly, do the following:
 
-- Ensure [ember-cli-deploy-build-plus][2] is installed and configured.
+- Ensure [ember-cli-deploy-build-plus][2] is installed and configured, or if you need to use [ember-cli-deploy-build][5], that you have the additional configurations described below in place.
 
 - Install this plugin
 
@@ -29,6 +29,20 @@ $ ember install ember-cli-deploy-couchdb
 ```javascript
 ENV.couchdb = {
   db: 'http://localhost:5984/emberapp'
+
+  // optionally, if you are using ember-cli-deploy-build instead of
+  // ember-cli-deploy-build-plus, also include the following
+
+  // ddocname: emberapp,
+  // couchDir: 'tmp/deploy-dist',
+  // distDir: 'tmp/deploy-dist/_attachments'
+}
+```
+
+If you are using ember-cli-deploy-build, you will also need to add the following to your build hook
+```javascript
+ENV.build = {
+  outputPath: 'tmp/deploy-dist/_attachments'
 }
 ```
 
@@ -120,3 +134,4 @@ You can use the [issue tracker][4] to provide feedback, suggest features or repo
 [2]: https://github.com/martinic/ember-cli-deploy-build-plus "ember-cli-deploy-build-plus"
 [3]: https://wiki.apache.org/couchdb/Virtual_Hosts "vhost"
 [4]: https://github.com/martinic/ember-cli-deploy-couchdb/issues "issue tracker"
+[5]: https://github.com/ember-cli-deploy/ember-cli-deploy-build "ember-cli-deploy-build"
