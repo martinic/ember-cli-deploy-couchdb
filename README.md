@@ -56,6 +56,7 @@ if (environment === 'production') {
 
 If a [vhost][3] is used do the following:
 
+<<<<<<< HEAD
 ```javascript
 if (environment === 'production') {
   ENV.baseURL = '/';
@@ -67,6 +68,13 @@ if (environment === 'production') {
 ```bash
 $ ember deploy
 ```
+=======
+* [Git](http://git-scm.com/)
+* [Node.js](http://nodejs.org/) (with NPM)
+* [Bower](http://bower.io/)
+* [Ember CLI](http://ember-cli.com/)
+* [PhantomJS](http://phantomjs.org/)
+>>>>>>> ember-cli-update/master
 
 ## Installation
 Run the following command in your terminal:
