@@ -6,6 +6,7 @@ var path             = require('path');
 var push             = require('couchdb-push');
 var fs               = require('fs');
 var Promise          = require('ember-cli/lib/ext/promise');
+var VersionChecker   = require('ember-cli-version-checker');
 
 module.exports = {
   name: 'ember-cli-deploy-couchdb',
@@ -50,11 +51,17 @@ module.exports = {
         var distFiles      = this.readConfig('distFiles');
         var couchappignore = this.readConfig('couchappignore');
 
+        var checker = new VersionChecker(this);
+        var url = "ENV.baseURL: '";
+        if (checker.for('ember-cli', 'npm').satisfies('>= 2.7.0')) {
+          url = "ENV.rootURL: '";
+        }
+
         this.log('couchDir   : ' + couchDir, { color: 'gray' });
         db = db.replace( /\/\/.*\@/g ,'//'); // Strip username, password
         this.log("Visit      : " + db + "/_design/" + ddocname + "/_rewrite/ or vhost", { color: 'gray' });
         db = db.replace( /^.*\/\/.*\//g ,'/'); // Strip domain
-        this.log("ENV.baseURL: '" + db + "/_design/" + ddocname + "/_rewrite/' or '/'", { color: 'gray' });
+        this.log(url + db + "/_design/" + ddocname + "/_rewrite/' or '/'", { color: 'gray' });
 
         distFiles.sort();
         var previous = "";
