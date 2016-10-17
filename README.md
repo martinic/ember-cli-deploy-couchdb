@@ -50,7 +50,7 @@ ENV.build = {
 
 ```javascript
 if (environment === 'production') {
-  ENV.baseURL = '/emberapp/_design/ddocname/_rewrite/';
+  ENV.rootURL = '/emberapp/_design/ddocname/_rewrite/';
 }
 ```
 
@@ -58,7 +58,7 @@ If a [vhost][3] is used do the following:
 
 ```javascript
 if (environment === 'production') {
-  ENV.baseURL = '/';
+  ENV.rootURL = '/';
 }
 ```
 
