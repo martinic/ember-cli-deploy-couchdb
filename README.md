@@ -130,7 +130,7 @@ You can use the [issue tracker][4] to provide feedback, suggest features or repo
 
 - `npm test`
 
-[1]: http://ember-cli.github.io/ember-cli-deploy/plugins "Plugin Documentation"
+[1]: http://ember-cli-deploy.com/ "Plugin Documentation"
 [2]: https://github.com/martinic/ember-cli-deploy-build-plus "ember-cli-deploy-build-plus"
 [3]: https://wiki.apache.org/couchdb/Virtual_Hosts "vhost"
 [4]: https://github.com/martinic/ember-cli-deploy-couchdb/issues "issue tracker"
