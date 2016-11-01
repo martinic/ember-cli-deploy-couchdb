@@ -13,7 +13,7 @@
   },
   "repository": "https://github.com/martinic/ember-cli-deploy-couchdb",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 4"
   },
   "author": "Martin Broerse and ember-cli-deploy team",
   "license": "MIT",
