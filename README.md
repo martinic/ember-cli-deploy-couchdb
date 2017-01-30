@@ -1,5 +1,7 @@
 # Ember-cli-deploy-couchdb
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/martinic/ember-cli-deploy-couchdb.svg)](https://greenkeeper.io/)
+
 > An ember-cli-deploy plugin to upload files to CouchDB
 
 [![](https://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/plugins/ember-cli-deploy-couchdb.svg)](http://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/)
