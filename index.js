@@ -5,7 +5,7 @@ var DeployPluginBase = require('ember-cli-deploy-plugin');
 var path             = require('path');
 var push             = require('couchdb-push');
 var fs               = require('fs');
-var Promise          = require('ember-cli/lib/ext/promise');
+var RSVP         = require('rsvp');
 var VersionChecker   = require('ember-cli-version-checker');
 
 module.exports = {
@@ -108,7 +108,7 @@ module.exports = {
         var db          = this.readConfig('db');
 
         this.log('Start Upload', { color: 'green' });
-        var promise = new Promise(function(resolve, reject) {
+        var rsvp = new RSVP(function(resolve, reject) {
           push(db, couchDir, function(error, response) {
             if(error) {
               this.log(error + ' ' + response, { color: 'red' });
@@ -119,7 +119,7 @@ module.exports = {
             }
           }.bind(this));
         }.bind(this));
-        return promise;
+        return rsvp;
       },
     });
     return new DeployPlugin();
