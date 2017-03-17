@@ -108,7 +108,7 @@ module.exports = {
         var db          = this.readConfig('db');
 
         this.log('Start Upload', { color: 'green' });
-        var rsvp = new RSVP(function(resolve, reject) {
+        var promise = new RSVP.Promise(function(resolve, reject) {
           push(db, couchDir, function(error, response) {
             if(error) {
               this.log(error + ' ' + response, { color: 'red' });
@@ -119,7 +119,7 @@ module.exports = {
             }
           }.bind(this));
         }.bind(this));
-        return rsvp;
+        return promise;
       },
     });
     return new DeployPlugin();
