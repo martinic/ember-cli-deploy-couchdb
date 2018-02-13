@@ -4,5 +4,6 @@
 - Deprecation of baseURL in ember-cli >= 2.7.0
 - Remove public folder
 - Fix DEPRECATION: `ember-cli/ext/promise` is deprecated, use `rsvp` instead.
+- Upgrade to `ember-cli` v2.18.2 
 
 Thank you to all who took the time to contribute!

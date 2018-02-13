@@ -1,11 +1,11 @@
-/* jshint node: true */
+/* eslint-env node */
 'use strict';
 
 var DeployPluginBase = require('ember-cli-deploy-plugin');
 var path             = require('path');
 var push             = require('couchdb-push');
 var fs               = require('fs');
-var RSVP         = require('rsvp');
+var RSVP             = require('rsvp');
 var VersionChecker   = require('ember-cli-version-checker');
 
 module.exports = {
