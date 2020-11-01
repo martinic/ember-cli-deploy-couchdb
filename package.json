@@ -23,7 +23,7 @@
     "couchdb-push": "^2.3.2",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-deploy-plugin": "^0.2.9",
-    "ember-cli-version-checker": "^2.1.0",
+    "ember-cli-version-checker": "^2.2.0",
     "rsvp": "^4.8.1"
   },
   "devDependencies": {
