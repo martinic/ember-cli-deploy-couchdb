@@ -24,7 +24,7 @@
     "ember-cli-babel": "^6.6.0",
     "ember-cli-deploy-plugin": "^0.2.9",
     "ember-cli-version-checker": "^2.1.0",
-    "rsvp": "^4.8.1"
+    "rsvp": "^4.8.5"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
